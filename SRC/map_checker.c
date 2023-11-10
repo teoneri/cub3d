@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:17 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/09 18:08:57 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/10 16:24:21 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ char **check_open_map(char *argv)
 	temp = ft_calloc(sizeof(char), 2);
 	stash = ft_calloc(sizeof(char), 1);
 	fd = open(argv, O_RDONLY);
+	if(fd == -1)
+		return 0;
 	while (readed != 0)
 	{
 		readed = read(fd, temp, 1);
@@ -123,109 +125,27 @@ int check_map_path(char **map, t_game *g)
 	return 1;
 }
 
-int	map_row(char **mx)
+int valid_char(char **map, int i, int j, t_game *g)
 {
-	int	i;
+	static int k;
 
-	i = 6;
-	while (mx[i] != NULL)
-		i++;
-	return (i);
-}
-
-int map_colomn(char **mx)
-{
-	int i;
-	int j;
-	int max;
-
-	max = 0;
-	i = 6;
-	j = 0;
-	while(mx[i])
+	k = 0;
+	if(map[i][j] == 'S' || map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'W')
 	{
-		while(mx[i][j])
-		{
-			j++;
-		}
-		if(j > max)
-			max = j;
-		i++;
-	}
-	return max;
-}
-
-
-int nosp_strlen(char *str)
-{
-	int i;
-	int j;
-	int len;
-
-	len = ft_strlen(str) - 1;
-	j = 0;
-	i = 0;
-	
-	if(!str)
-		return 0;
-	while(str[i] == ' ' || str[i] == '\t' )
-		i++;	
-	j = i;
-	while(str[len] == ' ' || str[len] == '\t')
-	{
-		len--;
-		j++;
-	}
-	while(str[i])
-		i++;
-	return i - j;
-}
-	
-
-int	valid_whitespace(char **map, int i, int j)
-{
-	if (map[i][j] != ' ')
-		return (1);
-	if(map[i][j - 1] && map[i - 1][j] && 
-		(map[i][j - 1] == '0' || map[i - 1][j] == '0'))
-		return 0;
-	if(j < (int)ft_strlen(map[i]) && i < (ft_matrixlen(map) - 1) &&
-		 (map[i][j + 1] == '0' || map[i + 1][j] == '0'))
-		return 0;
-	return (1);
-}
-
-int valid_top_bottom(char **map, int i, int j)
-{
-	while(map[i][j] && (map[i][j] == ' ' || map[i][j] == '\t'))
-		j++;
-	while(map[i][j])
-	{
-		if(map[i][j] != '1' && map[i][j] != ' ' && map[i][j] != '\t')
+		if(k != 0)
 			return 0;
-		j++;
+		g->player->x = j;
+		g->player->y = i;
+		g->player->direction = map[i][j];
+		k = 1;
+		return 1;
 	}
-	return 1;
-}
-
-int valid_edge(char **map, int i, int j)
-{
-	int len;
-
-	len = ft_strlen(map[i]) - 1;
-	while(map[i][len] == ' ' || map[i][len] == '\t')
-		len--;
-	while(map[i][j] && (map[i][j] == ' ' || map[i][j] == '\t'))
-		j++;
-	if(map[i][j] != '1' || map[i][len] != '1')
-	{
-		printf("11111111111");
+	if(map[i][j] != '1' && map[i][j] != '0' && map[i][j] != ' ' && map[i][j] != '\t')
 		return 0;
-	}
 	return 1;
 }
 
-int check_map_maze(char **map)
+int check_map_maze(char **map, t_game *g)
 {
 	int i;
 	int j;
@@ -247,12 +167,11 @@ int check_map_maze(char **map)
 				printf("44444444444");
 				return 0;
 			}
-			if(map[i][j] != '1' && map[i][j] != '0' && map[i][j] != 'S'&&
-				map[i][j] != 'N' && map[i][j] != 'E' && map[i][j] != 'W' && map[i][j] != ' ' && map[i][j] != '\t')
-				{
-					printf("2222222222");
-					return 0;
-				}
+			if(!valid_char(map, i , j, g))
+			{
+				printf("2222222222");
+				return 0;
+			}
 			if(map[i + 1])
 			{
 				if((nosp_strlen(map[i]) > nosp_strlen(map[i - 1]) && (i) > nosp_strlen(map[i - 1])) ||
@@ -276,7 +195,7 @@ int check_map(char *argv, t_game *g)
 	if(!check_mapname(argv))
 		return 0;
 	g->map = check_open_map(argv);
-	if(!check_map_path(g->map, g) || !check_map_maze(g->map))
+	if(!check_map_path(g->map, g) || !check_map_maze(g->map, g))
 		return 0;
 	return 1;
 }
