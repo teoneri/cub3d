@@ -6,7 +6,7 @@
 /*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/10 19:17:37 by lfai             ###   ########.fr       */
+/*   Updated: 2023/11/10 19:27:21 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@
 # include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+# include "../minilibx-linux/mlx.h"
 # include "../Libft/libft.h"
+# include <X11/keysym.h>
 
 # define ESC_KEY 65307
 # define UP_KEY 65362
@@ -32,6 +34,8 @@
 
 typedef struct s_game
 {
+	t_window *window;
+	t_player *player;
 	char **map;
 	char *NO;
 	char *SO;
@@ -41,11 +45,18 @@ typedef struct s_game
 	char *C;
 } t_game;
 
-typedef struct s_coords
+typedef struct s_window
 {
-	int	x;
-	int	y;
-}				t_coords;
+	void *mlx;
+	void *win;
+} t_window;
+
+typedef struct s_player
+{
+	float x;
+	float y;
+	char direction;
+} t_player;
 
 typedef struct s_movement
 {
@@ -70,5 +81,11 @@ typedef struct s_player
 
 int check_map(char *argv, t_game *g);
 char **check_open_map(char *argv);
+int valid_edge(char **map, int i, int j);
+int valid_top_bottom(char **map, int i, int j);
+int	valid_whitespace(char **map, int i, int j);
+int nosp_strlen(char *str);
+int map_colomn(char **mx);
+int	map_row(char **mx);
 
 #endif
