@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/08 17:02:36 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/10 19:17:37 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,15 @@
 #include <fcntl.h>
 # include "../Libft/libft.h"
 
+# define ESC_KEY 65307
+# define UP_KEY 65362
+# define DOWN_KEY 65364
+# define LEFT_KEY 65361
+# define RIGHT_KEY 65363
+# define W_KEY 119
+# define A_KEY 97
+# define S_KEY 115
+# define D_KEY 100
 
 typedef struct s_game
 {
@@ -31,6 +40,33 @@ typedef struct s_game
 	char *F;
 	char *C;
 } t_game;
+
+typedef struct s_coords
+{
+	int	x;
+	int	y;
+}				t_coords;
+
+typedef struct s_movement
+{
+	int	look_up;
+	int	look_down;
+	int	look_left;
+	int	look_right;
+	int	move_up;
+	int	move_down;
+	int	move_left;
+	int	move_right;
+}				t_movement;
+
+typedef struct s_player
+{
+	t_coords	pos;
+	int		speed;
+	int		sens;
+
+}
+
 
 int check_map(char *argv, t_game *g);
 char **check_open_map(char *argv);
