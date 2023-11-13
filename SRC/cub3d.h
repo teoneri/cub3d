@@ -6,7 +6,7 @@
 /*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/10 19:27:21 by lfai             ###   ########.fr       */
+/*   Updated: 2023/11/12 19:52:50 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ typedef struct s_player
 	float x;
 	float y;
 	char direction;
+	float speed;
+	float sens;
 } t_player;
 
 typedef struct s_movement
@@ -70,14 +72,13 @@ typedef struct s_movement
 	int	move_right;
 }				t_movement;
 
-typedef struct s_player
+typedef struct s_core
 {
-	t_coords	pos;
-	int		speed;
-	int		sens;
-
-}
-
+	void			*mlx;
+	void			*mlx_win;
+	t_game		*game;
+	t_movement	*movement;
+}				t_core;
 
 int check_map(char *argv, t_game *g);
 char **check_open_map(char *argv);
@@ -87,5 +88,9 @@ int	valid_whitespace(char **map, int i, int j);
 int nosp_strlen(char *str);
 int map_colomn(char **mx);
 int	map_row(char **mx);
+void	ft_quit(char *str, int status);
+int	press_key(int key, t_core *core);
+
+
 
 #endif
