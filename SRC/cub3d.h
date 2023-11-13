@@ -6,7 +6,7 @@
 /*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/12 19:52:50 by lfai             ###   ########.fr       */
+/*   Updated: 2023/11/13 19:16:04 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,32 +53,43 @@ typedef struct s_window
 
 typedef struct s_player
 {
-	float x;
-	float y;
+	double posX;
+	double posY;
+	double dirX;
+	double dirY;
 	char direction;
 	float speed;
 	float sens;
 } t_player;
 
-typedef struct s_movement
+typedef struct s_ray
 {
-	int	look_up;
-	int	look_down;
-	int	look_left;
-	int	look_right;
-	int	move_up;
-	int	move_down;
-	int	move_left;
-	int	move_right;
-}				t_movement;
+	double rayDirX;
+	double rayDirY;
+	double camX;
+	double planeX;
+	double planeY;
+	double deltaDistx;
+	double deltaDistY;
+	double sideDistX;
+	double sideDistY;
+} t_ray;
 
 typedef struct s_core
 {
-	void			*mlx;
-	void			*mlx_win;
-	t_game		*game;
-	t_movement	*movement;
-}				t_core;
+	t_window *window;
+	t_player *player;
+	t_ray *ray;
+	int mapX;
+	int mapY;
+	char **map;
+	char *NO;
+	char *SO;
+	char *WE;
+	char *EA;
+	char *F;
+	char *C;
+} t_game;
 
 int check_map(char *argv, t_game *g);
 char **check_open_map(char *argv);
