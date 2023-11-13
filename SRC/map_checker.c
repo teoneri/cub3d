@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:17 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/10 16:24:21 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/13 15:58:39 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,8 +134,8 @@ int valid_char(char **map, int i, int j, t_game *g)
 	{
 		if(k != 0)
 			return 0;
-		g->player->x = j;
-		g->player->y = i;
+		g->player->posX = j;
+		g->player->posY = i;
 		g->player->direction = map[i][j];
 		k = 1;
 		return 1;
