@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/13 16:56:58 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/14 16:40:07 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,7 @@ int	valid_whitespace(char **map, int i, int j);
 int nosp_strlen(char *str);
 int map_colomn(char **mx);
 int	map_row(char **mx);
+int draw2Dmap(t_game *g);
+void draw_square(t_game *g, int x, int y, int color);
 
 #endif
