@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:20:20 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/13 18:08:33 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/14 16:49:28 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,18 @@
 void init_game(t_game *g)
 {
 	g->player = malloc(sizeof(t_player));
+	g->window = malloc(sizeof(t_window));
+}
+void	ft_quit(char *str, int status)
+{
+	ft_putstr_fd(str, 0);
+	exit(status);
 }
 
 int	ft_input(int keycode, t_game *g)
 {
+	if (keycode == XK_Escape)
+		ft_quit("Quitting the game\n", 0);
 	if (keycode == XK_s)
 		g->player->posY -=5;
 	else if (keycode == XK_w)
@@ -30,11 +38,11 @@ int	ft_input(int keycode, t_game *g)
 	return (0);
 }
 
-int game_loop(t_game *g)
+int	close_x(void)
 {
-
+	ft_quit("Quitting the game\n", 0);
+	return (0);
 }
-
 
 int main(int argc, char **argv)
 {
@@ -51,7 +59,10 @@ int main(int argc, char **argv)
 		
 		g.window->mlx = mlx_init();
 		g.window->win = mlx_new_window(g.window->mlx, 1920, 1080, "cub3D");
-		mlx_loop_hook(g.window->mlx, game_loop, &g);
+		// draw2Dmap(&g);
+		mlx_hook(g.window->win, 2, 1L << 0, *ft_input, &g);
+		mlx_loop_hook(g.window->mlx, draw2Dmap, &g);
+		mlx_hook(g.window->win, 17, 0, close_x, &g);
 		mlx_loop(g.window->mlx);
 	}
 }

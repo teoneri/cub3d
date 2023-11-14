@@ -6,7 +6,7 @@
 /*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/13 19:16:04 by lfai             ###   ########.fr       */
+/*   Updated: 2023/11/14 17:17:35 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,5 @@ int	valid_whitespace(char **map, int i, int j);
 int nosp_strlen(char *str);
 int map_colomn(char **mx);
 int	map_row(char **mx);
-void	ft_quit(char *str, int status);
-int	press_key(int key, t_core *core);
-
-
 
 #endif
