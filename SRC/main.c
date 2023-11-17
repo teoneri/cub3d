@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:20:20 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/14 16:49:28 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/17 18:20:31 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void init_game(t_game *g)
 {
 	g->player = malloc(sizeof(t_player));
 	g->window = malloc(sizeof(t_window));
+	g->line = malloc(sizeof(t_line));
+	g->NO_tex = malloc(sizeof(t_image));
+	g->SO_tex = malloc(sizeof(t_image));
+	g->WE_tex = malloc(sizeof(t_image));
+	g->EA_tex = malloc(sizeof(t_image));
 }
 void	ft_quit(char *str, int status)
 {
