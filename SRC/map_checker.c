@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_checker.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:17 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/13 15:58:39 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/17 11:03:10 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ void add_path_var(t_game *g, char *type, int *flag, char *map)
 	else if(!ft_strcmp(type, "EA "))
 		g->EA = copy_path(map, i);
 	else if(!ft_strcmp(type, "F "))
-	{	
+	{
 		i = 1;
 		g->F = copy_path(map, i);
-	}	
+	}
 	else if(!ft_strcmp(type, "C "))
 	{
 		i = 1;
@@ -152,7 +152,7 @@ int check_map_maze(char **map, t_game *g)
 
 	i = 6;
 	j = 0;
-	
+
 	if(!valid_top_bottom(map, i, j) || !valid_top_bottom(map, map_row(map) - 1, j))
 		return 0;
 	i++;

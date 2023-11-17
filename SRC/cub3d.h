@@ -6,7 +6,7 @@
 /*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/14 17:17:35 by lfai             ###   ########.fr       */
+/*   Updated: 2023/11/17 15:39:16 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,37 +18,36 @@
 # include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-# include "../minilibx-linux/mlx.h"
+# include "../mlx/mlx.h"
 # include "../Libft/libft.h"
-# include <X11/keysym.h>
 
-# define ESC_KEY 65307
-# define UP_KEY 65362
-# define DOWN_KEY 65364
-# define LEFT_KEY 65361
-# define RIGHT_KEY 65363
-# define W_KEY 119
-# define A_KEY 97
-# define S_KEY 115
-# define D_KEY 100
+# define ESC_KEY 53
+# define UP_KEY 126
+# define DOWN_KEY 125
+# define LEFT_KEY 123
+# define RIGHT_KEY 124
+# define W_KEY 13
+# define A_KEY 0
+# define S_KEY 1
+# define D_KEY 2
 
-typedef struct s_game
+typedef struct s_controls
 {
-	t_window *window;
-	t_player *player;
-	char **map;
-	char *NO;
-	char *SO;
-	char *WE;
-	char *EA;
-	char *F;
-	char *C;
-} t_game;
+	int	look_left;
+	int	look_right;
+	int	look_up;
+	int	look_down;
+	int	move_left;
+	int	move_right;
+	int	move_up;
+	int	move_down;
+} t_controls;
 
 typedef struct s_window
 {
 	void *mlx;
 	void *win;
+	t_controls *controls;
 } t_window;
 
 typedef struct s_player
@@ -58,8 +57,6 @@ typedef struct s_player
 	double dirX;
 	double dirY;
 	char direction;
-	float speed;
-	float sens;
 } t_player;
 
 typedef struct s_ray
@@ -75,7 +72,7 @@ typedef struct s_ray
 	double sideDistY;
 } t_ray;
 
-typedef struct s_core
+typedef struct s_game
 {
 	t_window *window;
 	t_player *player;
@@ -99,5 +96,9 @@ int	valid_whitespace(char **map, int i, int j);
 int nosp_strlen(char *str);
 int map_colomn(char **mx);
 int	map_row(char **mx);
+int draw2Dmap(t_game *g);
+void draw_square(t_game *g, int x, int y, int color);
+int	press_key(int key,  t_window *window);
+int	close_x(void);
 
 #endif

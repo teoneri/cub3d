@@ -1,32 +1,31 @@
 NAME = cub3D
 
-SRC = SRC/main.c SRC/map_checker.c  SRC/map_valid.c
+CC = gcc
 
-LINKS = minilibx-linux/libmlx_Linux.a -lXext -lX11 -lm
+CFLAGS = -Werror -Wextra -Wall -I minilibx -L mlx -lmlx -framework OpenGL -framework AppKit
 
-SRC_OBJ = $(SRC:.c=.o)
+RM = rm -rf
 
-LIB = Libft/libft.a
+SRCS = SRC/main.c SRC/map_checker.c  SRC/map_valid.c SRC/controls.c SRC/drawmap.c
 
-FLAGS = -Wall -Wextra -Werror -fPIE -fPIC -g
+OBJS			= $(SRCS:.c=.o)
+
+$(NAME) : ${SRCS}
+	$(MAKE) -C Libft/
+	$(MAKE) -C mlx/
+	$(MAKE) clean -C Libft/
+	gcc $(CFLAGS) $(SRCS) Libft/libft.a -o $(NAME)
+
 all : $(NAME)
 
-$(NAME): $(SRC_OBJ) $(HEAD)
-	$(MAKE) -C Libft/
-	$(MAKE) -C minilibx-linux/
-	$(MAKE) clean -C Libft/
-	@gcc $(FLAGS) $(SRC_OBJ) $(LIB) $(LINKS) -o $(NAME)
+fclean : clean
+	$(RM) $(NAME)
+	make clean -C mlx
+	make fclean -C libft
 
-%.o: %.c
-	$(CC) $(FLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+clean :
+	$(RM) $(NAME)
+	make clean -C mlx
+	make clean -C libft
 
-bonus: all
-        
-clean:
-	rm -f $(SRC_OBJ)
-
-fclean: clean
-	rm -f $(NAME)
-	$(MAKE) fclean -C Libft/
-	$(MAKE) clean -C minilibx-linux/
-re: fclean all
+re : fclean all
