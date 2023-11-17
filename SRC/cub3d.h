@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/14 16:40:07 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/17 15:56:22 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ typedef struct s_player
 	double posY;
 	double dirX;
 	double dirY;
+	double planeX;
+	double planeY;
 	char direction;
 } t_player;
 
@@ -42,13 +44,15 @@ typedef struct s_ray
 {
 	double rayDirX;
 	double rayDirY;
-	double camX;
-	double planeX;
-	double planeY;
+	double cameraX;
 	double deltaDistx;
 	double deltaDistY;
 	double sideDistX;
 	double sideDistY;
+	int stepX;
+	int stepY;
+	int hit;
+	int side;
 } t_ray;
 
 typedef struct s_game

@@ -1,6 +1,6 @@
 NAME = cub3D
 
-SRC = SRC/main.c SRC/map_checker.c  SRC/map_valid.c
+SRC = SRC/main.c SRC/map_checker.c  SRC/map_valid.c SRC/drawmap.c
 
 LINKS = minilibx-linux/libmlx_Linux.a -lXext -lX11 -lm
 

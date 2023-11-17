@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:57:39 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/14 16:39:49 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/15 14:29:02 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void draw_square(t_game *g, int x, int y, int color)
         }
     }
 }
-
 
 
 int draw2Dmap(t_game *g)
