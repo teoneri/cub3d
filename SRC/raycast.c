@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 15:27:24 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/17 18:46:36 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/20 14:59:01 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void init_ray_value(t_game *g)
 	g->ray->rayDirY = g->player->dirY + g->player->planeY * g->ray->cameraX;
 	g->mapX = (int)g->player->posX;
 	g->mapY = (int)g->player->posY;
-	g->ray->deltaDistX = abs(1 / g->ray->rayDirX);
-	g->ray->deltaDistY = abs(1 / g->ray->rayDirY);
+	g->ray->deltaDistX = fabs(1 / g->ray->rayDirX);
+	g->ray->deltaDistY = fabs(1 / g->ray->rayDirY);
 	g->ray->hit = 0;
 }
 
@@ -73,7 +73,7 @@ void dda(t_game *g)
 			else
 				g->ray->side = NORTH;
 		}
-	if(g->map[g->mapX][g->mapY] > 0)
+	if(g->map[g->mapY][g->mapX] > 0)
 		g->ray->hit = 1;
 	}
 }
@@ -105,5 +105,8 @@ int game_loop(t_game *g)
 		init_ray_value(g);
 		calculate_side(g);
 		dda(g);
+		render(g);
+		g->ray->curr_x ++;
 	}
+	return 0;
 }

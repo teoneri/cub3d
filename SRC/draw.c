@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:58:48 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/17 18:50:08 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/20 15:32:00 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 
 
-static void texture_on_img(t_game *g, t_image *tex)
+void texture_on_img(t_game *g, t_image *tex)
 {
 	int scale;
 
@@ -55,11 +55,12 @@ void draw_texture_image(t_game *g, t_image *tex)
 	}
 }
 
-void paint_texture_line(t_game *g)
+void paint_texture_line(t_game *g, double wall_x)
 {
 	t_image *img;
 	int tex_x;
 	
+	img = NULL;
 	if(g->ray->side == EAST)
 		img = g->EA_tex;
 	else if(g->ray->side == NORTH)
@@ -84,17 +85,17 @@ void	render(t_game *g)
 	double wall_x;
 
 	if(g->ray->side == WEST || g->ray->side == EAST)
-		wall_x = g->player->posY + g->ray->prepWallDist * g->ray->rayDirY;
+		wall_x = g->player->posY + g->ray->perpWallDist * g->ray->rayDirY;
 	else
-		wall_x = g->player->posX + g->ray->prepWallDist * g->ray->rayDirX;
+		wall_x = g->player->posX + g->ray->perpWallDist * g->ray->rayDirX;
 	wall_x -= floor(wall_x);
 	g->line->x = g->ray->curr_x;
 	if(g->map[g->mapY][g->mapX] == '1')
-		paint_line();
-	g->line->y0 = 0;
-	g->line->y1 = g->ray->draw_start;
-	paint_line();
-	g->line->y0 = 1080;
-	g->line->y1 = g->ray->draw_end;
-	paint_line()
+		 paint_texture_line(g, wall_x);
+	// g->line->y0 = 0;
+	// g->line->y1 = g->ray->draw_start;
+	// paint_line();
+	// g->line->y0 = 1080;
+	// g->line->y1 = g->ray->draw_end;
+	// paint_line()
 }	

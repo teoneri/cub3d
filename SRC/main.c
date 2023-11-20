@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:20:20 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/17 18:20:31 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/20 14:55:26 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void init_game(t_game *g)
 {
 	g->player = malloc(sizeof(t_player));
+	g->line = malloc(sizeof(t_line));
+	g->ray = malloc(sizeof(t_ray));
 	g->window = malloc(sizeof(t_window));
 	g->line = malloc(sizeof(t_line));
 	g->NO_tex = malloc(sizeof(t_image));
@@ -56,17 +58,16 @@ int main(int argc, char **argv)
 	if(argc == 2)
 	{
 		init_game(&g);
+		g.window->mlx = mlx_init();
 		if(!check_map(argv[1], &g))
 		{
 			printf("Error\n");
 			return 0;
 		}
-		
-		g.window->mlx = mlx_init();
 		g.window->win = mlx_new_window(g.window->mlx, 1920, 1080, "cub3D");
 		// draw2Dmap(&g);
 		mlx_hook(g.window->win, 2, 1L << 0, *ft_input, &g);
-		mlx_loop_hook(g.window->mlx, draw2Dmap, &g);
+		mlx_loop_hook(g.window->mlx, game_loop, &g);
 		mlx_hook(g.window->win, 17, 0, close_x, &g);
 		mlx_loop(g.window->mlx);
 	}

@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:17 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/17 18:39:25 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/20 15:20:23 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,11 @@ void	init_player(t_game *g, int i, int j, char **map)
 	} 
 	else if (map[i][j] == 'W') 
 	{
-		g->player->dirX = -1;
+		g->player->dirX = -1.00;
 		g->player->dirY = 0;
+		g->player->planeY = -0.66;
+		g->player->planeX = 0;
+
 	} 
 	else if (map[i][j] == 'S') 
 	{
@@ -223,14 +226,22 @@ void load_texture(t_game *g, t_image *img, char *s)
 	int width;
 	int height;
 
+	height = 0;
+	width = 0;
 	if(!ft_strcmp(s, "NO"))
-		img = mlx_xpm_file_to_image(g->window->mlx, g->NO, &width, &height);
+		img->img_ptr = mlx_xpm_file_to_image(g->window->mlx, g->NO, &width, &height);
 	else if(!ft_strcmp(s, "SO"))
-		img = mlx_xpm_file_to_image(g->window->mlx, g->SO, &width, &height);
+		img->img_ptr = mlx_xpm_file_to_image(g->window->mlx, g->SO, &width, &height);
 	else if(!ft_strcmp(s, "EA"))
-		img = mlx_xpm_file_to_image(g->window->mlx, g->EA, &width, &height);
+		img->img_ptr = mlx_xpm_file_to_image(g->window->mlx, g->EA, &width, &height);
 	else if(!ft_strcmp(s, "WE"))
-		img = mlx_xpm_file_to_image(g->window->mlx, g->WE, &width, &height);
+		img->img_ptr = mlx_xpm_file_to_image(g->window->mlx, g->WE, &width, &height);
+	if (img->img_ptr == NULL)
+    {
+        printf("Error loading texture %s\n", s);
+        
+        return;
+    }
 	img->width = width;
 	img->height = height;
 }

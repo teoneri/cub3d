@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/17 18:51:18 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/20 14:45:28 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+# include <math.h>
 # include "../minilibx-linux/mlx.h"
 # include "../Libft/libft.h"
 # include <X11/keysym.h>
@@ -120,7 +121,7 @@ int	map_row(char **mx);
 int draw2Dmap(t_game *g);
 void draw_square(t_game *g, int x, int y, int color);
 void	render(t_game *g);
-void paint_texture_line(t_game *g);
+void paint_texture_line(t_game *g, double wall_x);
 void draw_texture_image(t_game *g, t_image *tex);
 void texture_on_img(t_game *g, t_image *tex);
 void init_ray_value(t_game *g);
