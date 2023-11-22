@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/20 14:45:28 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/22 16:45:08 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define EAST 2
 # define SOUTH 3
 # define WEST 4
+# define WIN_HEIGHT 1080
+# define WIN_WIDTH 1920
 
 
 typedef struct s_window
@@ -120,14 +122,14 @@ int map_colomn(char **mx);
 int	map_row(char **mx);
 int draw2Dmap(t_game *g);
 void draw_square(t_game *g, int x, int y, int color);
-void	render(t_game *g);
-void paint_texture_line(t_game *g, double wall_x);
-void draw_texture_image(t_game *g, t_image *tex);
-void texture_on_img(t_game *g, t_image *tex);
-void init_ray_value(t_game *g);
-void calculate_side(t_game * g);
-void dda(t_game *g);
-void	measure_perp(t_game *g);
+void	render(t_game *g, t_ray *ray);
+void paint_texture_line(t_game *g, double wall_x, t_line *line, t_ray *ray);
+void draw_texture_image(t_game *g, t_image *tex, t_line *line, t_ray *ray);
+void texture_on_img(t_game *g, t_image *tex, t_line *line, t_ray *ray);
+void init_ray_value(t_game *g, t_ray *ray);
+void calculate_side(t_game * g, t_ray *ray);
+void dda(t_game *g, t_ray *ray);
+void	measure_perp(t_game *g, t_ray *ray);
 int game_loop(t_game *g);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:20:20 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/20 14:55:26 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/22 15:59:35 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ void init_game(t_game *g)
 	g->SO_tex = malloc(sizeof(t_image));
 	g->WE_tex = malloc(sizeof(t_image));
 	g->EA_tex = malloc(sizeof(t_image));
+	g->img = malloc(sizeof(t_image));
+	
 }
 void	ft_quit(char *str, int status)
 {
@@ -64,8 +66,12 @@ int main(int argc, char **argv)
 			printf("Error\n");
 			return 0;
 		}
-		g.window->win = mlx_new_window(g.window->mlx, 1920, 1080, "cub3D");
+		g.window->win = mlx_new_window(g.window->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 		// draw2Dmap(&g);
+		g.img->img_ptr = mlx_new_image(g.window->mlx, WIN_WIDTH, WIN_HEIGHT);
+		g.img->width = WIN_WIDTH;
+		g.img->height = WIN_HEIGHT;
+		g.img->data = mlx_get_data_addr(g.img->img_ptr, &g.img->bits_per_pixel, &g.img->line_length, &g.img->endian);
 		mlx_hook(g.window->win, 2, 1L << 0, *ft_input, &g);
 		mlx_loop_hook(g.window->mlx, game_loop, &g);
 		mlx_hook(g.window->win, 17, 0, close_x, &g);

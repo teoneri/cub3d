@@ -8,7 +8,7 @@ SRC_OBJ = $(SRC:.c=.o)
 
 LIB = Libft/libft.a
 
-FLAGS = -Wall -Wextra -Werror -fPIE -fPIC -g
+FLAGS = -Wall -Wextra -Werror -fPIE -fPIC -g3 -O0
 all : $(NAME)
 
 $(NAME): $(SRC_OBJ) $(HEAD)
@@ -18,7 +18,7 @@ $(NAME): $(SRC_OBJ) $(HEAD)
 	@gcc $(FLAGS) $(SRC_OBJ) $(LIB) $(LINKS) -o $(NAME)
 
 %.o: %.c
-	$(CC) $(FLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+	@gcc $(FLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
 
 bonus: all
         
