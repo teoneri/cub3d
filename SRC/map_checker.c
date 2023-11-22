@@ -6,7 +6,7 @@
 /*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:17 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/17 11:03:10 by lfai             ###   ########.fr       */
+/*   Updated: 2023/11/22 11:19:58 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,35 @@ int check_map_path(char **map, t_game *g)
 	return 1;
 }
 
+void	init_player(t_game *g, int i, int j, char **map)
+{
+	g->player->posX = j;
+	g->player->posY = i;
+	g->player->planeX = 0;
+	g->player->planeY = 0.66;
+	g->player->direction = map[i][j];
+	if (map[i][j] == 'N')
+	{
+		g->player->dirX = 0;
+		g->player->dirY = -1;
+	}
+	else if (map[i][j] == 'E')
+	{
+		g->player->dirX = 1;
+		g->player->dirY = 0;
+	}
+	else if (map[i][j] == 'W')
+	{
+		g->player->dirX = -1;
+		g->player->dirY = 0;
+	}
+	else if (map[i][j] == 'S')
+	{
+		g->player->dirX = 0;
+		g->player->dirY = 1;
+	}
+}
+
 int valid_char(char **map, int i, int j, t_game *g)
 {
 	static int k;
@@ -134,9 +163,7 @@ int valid_char(char **map, int i, int j, t_game *g)
 	{
 		if(k != 0)
 			return 0;
-		g->player->posX = j;
-		g->player->posY = i;
-		g->player->direction = map[i][j];
+		init_player(g, i, j, map);
 		k = 1;
 		return 1;
 	}

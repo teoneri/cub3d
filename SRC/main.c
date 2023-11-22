@@ -6,7 +6,7 @@
 /*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:20:20 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/15 11:41:36 by lfai             ###   ########.fr       */
+/*   Updated: 2023/11/22 11:09:18 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 
 void init_game(t_game *g)
 {
-	g->player = malloc(sizeof(t_player));
-	g->window = malloc(sizeof(t_window));
+	ft_init_player(g);
+	ft_init_controls(g);
 }
+
 void	ft_quit(char *str, int status)
 {
 	ft_putstr_fd(str, 0);
@@ -38,7 +39,7 @@ void	ft_quit(char *str, int status)
 	return (0);
 }*/
 
-int	close_x(void)
+int	close_x()
 {
 	ft_quit("Quitting the game\n", 0);
 	return (0);
@@ -57,13 +58,14 @@ int main(int argc, char **argv)
 			return 0;
 		}
 
-		g.window->mlx = mlx_init();
-		g.window->win = mlx_new_window(g.window->mlx, 1920, 1080, "cub3D");
+		g.mlx = mlx_init();
+		g.win = mlx_new_window(g.mlx, 700, 400, "cub3D");
 		// draw2Dmap(&g);
-		mlx_hook(g.window->win, 2, 1L << 0, press_key, &g);
-		mlx_loop_hook(g.window->mlx, draw2Dmap, &g);
-		mlx_hook(g.window->win, 17, 0, close_x, &g);
-		mlx_loop(g.window->mlx);
+		mlx_hook(g.win, 2, 1L << 0, press_key, &g);
+		mlx_hook(g.win, 3, 1L << 1, release_key, &g);
+		mlx_loop_hook(g.mlx, draw2Dmap, &g);
+		mlx_hook(g.win, 17, 0, close_x, &g);
+		mlx_loop(g.mlx);
 	}
 	return (0);
 }
