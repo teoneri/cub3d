@@ -1,6 +1,6 @@
 NAME = cub3D
 
-SRC = SRC/main.c SRC/map_checker.c  SRC/map_valid.c SRC/raycast.c SRC/draw.c SRC/utils.c SRC/player_move.c SRC/controls.c 
+SRC = SRC/main.c SRC/map_checker.c  SRC/map_valid.c SRC/raycast.c SRC/draw.c SRC/utils.c SRC/player_move.c SRC/controls.c SRC/player_camera.c
 
 LINKS = minilibx-linux/libmlx_Linux.a -lXext -lX11 -lm
 
@@ -8,7 +8,7 @@ SRC_OBJ = $(SRC:.c=.o)
 
 LIB = Libft/libft.a
 
-FLAGS = -Wall -Wextra -Werror -fPIE -fPIC -g3 -O0
+FLAGS = -Wall -Wextra -Werror -fPIE -fPIC -O0 -g
 all : $(NAME)
 
 $(NAME): $(SRC_OBJ) $(HEAD)
@@ -18,7 +18,7 @@ $(NAME): $(SRC_OBJ) $(HEAD)
 	@gcc $(FLAGS) $(SRC_OBJ) $(LIB) $(LINKS) -o $(NAME)
 
 %.o: %.c
-	@gcc $(FLAGS) -I/usr/include -Imlx_linux -O3 -c $< -o $@
+	@gcc $(FLAGS) -I/usr/include -Imlx_linux -O0 -c $< -o $@
 
 bonus: all
         

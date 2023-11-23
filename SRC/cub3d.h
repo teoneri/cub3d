@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/23 15:12:48 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/23 18:28:31 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ typedef struct s_player
 	double planeY;
 	double cam_height;
 	double speed;
-	double sense;
+	double sens;
 	char direction;
+	int found;
 } t_player;
 
 typedef struct s_ray
@@ -115,6 +116,8 @@ typedef struct s_game
 	t_image *SO_tex;
 	t_image *EA_tex;
 	t_image *WE_tex;
+	int C_color;
+	int F_color;
 	int mapX;
 	int mapY;
 	char **map;
@@ -126,7 +129,7 @@ typedef struct s_game
 	char *C;
 } t_game;
 
-
+int	valid_zero(char **map, int i, int j);
 int check_map(char *argv, t_game *g);
 char **check_open_map(char *argv);
 int valid_edge(char **map, int i, int j);
@@ -145,6 +148,8 @@ void	ft_move_fwd(t_game *game);
 void	ft_move_bwd(t_game *game);
 void	ft_move_left(t_game *game);
 void	ft_move_right(t_game *game);
+void	ft_look_right(t_game *game);
+void	ft_look_left(t_game *game);
 void	ft_init_controls(t_game *g);
 void	ft_init_player(t_game *g);
 void	render(t_game *g, t_ray *ray);

@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/17 16:58:48 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/22 16:59:48 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/23 16:37:44 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,46 @@ void paint_texture_line(t_game *g, double wall_x, t_line *line, t_ray *ray)
 	draw_texture_image(g, img, line, ray);
 }
 
+void	paint_ceil_floor(int rgb, int x, int y, t_image *img)
+{
+	int r;
+	int b;
+	int g;
+
+	r = (rgb >> 16) & 0xFF;
+	g = (rgb >> 8) & 0xFF;
+	b = rgb & 0xFF;
+	img->data[y * img->line_length + x * img->bits_per_pixel / 8] = b;
+	img->data[y * img->line_length + x * img->bits_per_pixel / 8 + 1] = g;
+	img->data[y * img->line_length + x * img->bits_per_pixel / 8 + 2] = r;
+}
+
+void paint_line(t_game *g, t_line *line, int rgb)
+{
+	int y_max;
+	int y;
+
+	if(line->y0 < line->y1)
+	{
+		y = line->y0;
+		y_max = line->y1;
+	}
+	else
+	{
+		y = line->y1;
+		y_max = line->y0;
+	}
+	if(y >= 0)
+	{
+
+		while(y < y_max)
+		{
+			paint_ceil_floor(rgb, line->x, y, g->img);
+			y++;
+		}
+	}
+}
+
 void	render(t_game *g, t_ray *ray)
 {
 	double wall_x;
@@ -96,13 +136,12 @@ void	render(t_game *g, t_ray *ray)
 	line->x = ray->curr_x;
 	if(g->map[g->mapY][g->mapX] == '1')
 		 paint_texture_line(g, wall_x, line, ray);
+	line->y0 = 0;
+	line->y1 = ray->draw_start;
+	paint_line(g, line, g->F_color);
+	line->y0 = WIN_HEIGHT;
+	line->y1 = ray->draw_end;
+	paint_line(g, line,g->C_color);
 	free(line);
-	// g->line->y0 = 0;
-	// g->line->y1 = ray->draw_start;
-	// paint_line();
-	// g->line->y0 = WIN_HEIGHT;
-	// g->line->y1 = ray->draw_end;
-	// paint_line()
-	// free(line);
 
 }	

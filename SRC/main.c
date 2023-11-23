@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:20:20 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/23 15:14:39 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/23 18:27:58 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void init_game(t_game *g)
 {
 	ft_init_player(g);
 	ft_init_controls(g);
-	g->player = malloc(sizeof(t_player));
 	g->line = malloc(sizeof(t_line));
 	g->ray = malloc(sizeof(t_ray));
 	g->window = malloc(sizeof(t_window));
@@ -26,15 +25,12 @@ void init_game(t_game *g)
 	g->WE_tex = malloc(sizeof(t_image));
 	g->EA_tex = malloc(sizeof(t_image));
 	g->img = malloc(sizeof(t_image));
-	
 }
 void	ft_quit(char *str, int status)
 {
 	ft_putstr_fd(str, 0);
 	exit(status);
 }
-
-
 
 int	close_x()
 {
@@ -56,7 +52,6 @@ int main(int argc, char **argv)
 			return 0;
 		}
 		g.window->win = mlx_new_window(g.window->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
-		// draw2Dmap(&g);
 		g.img->img_ptr = mlx_new_image(g.window->mlx, WIN_WIDTH, WIN_HEIGHT);
 		g.img->width = WIN_WIDTH;
 		g.img->height = WIN_HEIGHT;

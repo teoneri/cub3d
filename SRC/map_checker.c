@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:17 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/23 14:56:49 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/23 18:29:27 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char *copy_path(char *map, int i)
 	char *path;
 	int j;
 
-	while(map[i] && (map[i] == ' ' || map[i] == '\t'))
+	while(map[i] && (map[i] == ' '))
 		i++;
 	i--;
 	len = ft_strlen(map) - i;
@@ -67,6 +67,7 @@ char *copy_path(char *map, int i)
 	j = 0;
 	while(map[i++])
 		path[j++] = map[i];
+	path[j] = '\0';
 	return path;
 }
 
@@ -157,21 +158,20 @@ void	init_player(t_game *g, int i, int j, char **map)
 
 int valid_char(char **map, int i, int j, t_game *g)
 {
-	static int k;
-
-	k = 0;
 	if(map[i][j] == 'S' || map[i][j] == 'N' || map[i][j] == 'E' || map[i][j] == 'W')
 	{
-		if(k != 0)
+		if(g->player->found != 0)
 			return 0;
 		init_player(g, i, j, map);
-		k = 1;
+		g->player->found = 1;
 		return 1;
 	}
 	if(map[i][j] != '1' && map[i][j] != '0' && map[i][j] != ' ' && map[i][j] != '\t')
 		return 0;
 	return 1;
 }
+
+
 
 int check_map_maze(char **map, t_game *g)
 {
@@ -190,14 +190,12 @@ int check_map_maze(char **map, t_game *g)
 			return 0;
 		while(map[i][j])
 		{
-			if(!valid_whitespace(map, i, j))
+			if(!valid_whitespace(map, i, j) || !valid_zero(map, i, j))
 			{
-				printf("44444444444");
 				return 0;
 			}
 			if(!valid_char(map, i , j, g))
 			{
-				printf("2222222222");
 				return 0;
 			}
 			if(map[i + 1])
@@ -206,7 +204,6 @@ int check_map_maze(char **map, t_game *g)
 					(nosp_strlen(map[i]) > nosp_strlen(map[i + 1]) && (i) > nosp_strlen(map[i + 1])))
 				{
 					printf("%s\n", map[i]);
-					printf("33333333333\n");
 					return 0;
 				}
 			}
@@ -218,7 +215,7 @@ int check_map_maze(char **map, t_game *g)
 	return 1;
 }
 
-void load_texture(t_game *g, t_image *img, char *s)
+int load_texture(t_game *g, t_image *img, char *s)
 {
 	int width;
 	int height;
@@ -233,16 +230,73 @@ void load_texture(t_game *g, t_image *img, char *s)
 		img->img_ptr = mlx_xpm_file_to_image(g->window->mlx, g->EA, &width, &height);
 	else if(!ft_strcmp(s, "WE"))
 		img->img_ptr = mlx_xpm_file_to_image(g->window->mlx, g->WE, &width, &height);
-	img->data = mlx_get_data_addr(img->img_ptr, &img->bits_per_pixel, &img->line_length, &img->endian);
 	if (img->img_ptr == NULL)
-    {
-        printf("Error loading texture %s\n", s);
-        
-        return;
-    }
+        return 0;
+	img->data = mlx_get_data_addr(img->img_ptr, &img->bits_per_pixel, &img->line_length, &img->endian);
 	img->width = width;
 	img->height = height;
+	return 1;
 }
+
+int control_num(char **s)
+{
+	int i;
+	int j;
+	i = 0;
+	j = 0;
+	
+	if(!s)
+		return 0;
+	while(s[i])
+	{
+		while(s[i][j])
+		{
+			if(!ft_isdigit(s[i][j]))
+				return 0;
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	return 1;
+}
+
+int process_color(t_game *g)
+{
+	char **f_color;
+	char **c_color;
+	int floor[3];
+	int ceil[3];
+	int i;
+
+	i = 0;
+	f_color = ft_split(g->F, ',');
+	c_color = ft_split(g->C, ',');
+	f_color[2] = ft_strtrim(f_color[2], " ");
+	c_color[2] = ft_strtrim(c_color[2], " ");
+	if(!control_num(f_color) || !control_num(c_color))
+		return 0;
+	while(c_color[i])
+		i++;
+	if(i != 3)
+		return 0;
+	i = 0;
+	while(f_color[i])
+		i++;
+	if(i != 3)
+		return 0;
+	i = 0;
+	while(i < 3)
+	{
+		floor[i] = ft_atoi(f_color[i]);
+		ceil[i] = ft_atoi(c_color[i]);
+		i++;
+	}
+	g->F_color = (1 << 24 | floor[0] << 16 | floor[1] << 8 | floor[2]);
+	g->C_color = (1 << 24 | ceil[0] << 16 | ceil[1] << 8 | ceil[2]);
+	return 1;
+}
+
 
 int check_map(char *argv, t_game *g)
 {
@@ -251,9 +305,10 @@ int check_map(char *argv, t_game *g)
 	g->map = check_open_map(argv);
 	if(!check_map_path(g->map, g) || !check_map_maze(g->map, g))
 		return 0;
-	load_texture(g, g->EA_tex, "EA");
-	load_texture(g, g->NO_tex, "NO");
-	load_texture(g, g->SO_tex, "SO");
-	load_texture(g, g->WE_tex, "WE");
+	if(!process_color(g))
+		return 0;
+	if(!load_texture(g, g->EA_tex, "EA") || !load_texture(g, g->NO_tex, "NO") ||
+		!load_texture(g, g->SO_tex, "SO") || !load_texture(g, g->WE_tex, "WE"))
+		return 0;
 	return 1;
 }
