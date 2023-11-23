@@ -6,7 +6,7 @@
 /*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:17 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/22 11:19:58 by lfai             ###   ########.fr       */
+/*   Updated: 2023/11/23 14:47:36 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,28 +129,33 @@ void	init_player(t_game *g, int i, int j, char **map)
 {
 	g->player->posX = j;
 	g->player->posY = i;
-	g->player->planeX = 0;
-	g->player->planeY = 0.66;
-	g->player->direction = map[i][j];
+	g->player->cam_height = 1.0;
 	if (map[i][j] == 'N')
 	{
-		g->player->dirX = 0;
-		g->player->dirY = -1;
+		g->player->dirX = 0.00;
+		//g->player->dirY = -1;
+		ft_set_fov(g, -1.00, 0.66, 0.00);
 	}
 	else if (map[i][j] == 'E')
 	{
 		g->player->dirX = 1;
-		g->player->dirY = 0;
+		//g->player->dirY = 0;
+		ft_set_fov(g, 0.00, 0.66, 0.00);
 	}
 	else if (map[i][j] == 'W')
 	{
 		g->player->dirX = -1;
-		g->player->dirY = 0;
+		//g->player->dirY = 0;
+		//g->player->planeY = -0.66;
+		//g->player->planeX = 0;
+		ft_set_fov(g, 0.00, -0.66, 0.00);
+
 	}
 	else if (map[i][j] == 'S')
 	{
-		g->player->dirX = 0;
-		g->player->dirY = 1;
+		g->player->dirX = 0.00;
+		//g->player->dirY = 1;
+		ft_set_fov(g, 1.00, 0.66, 0.00);
 	}
 }
 
@@ -217,6 +222,32 @@ int check_map_maze(char **map, t_game *g)
 	return 1;
 }
 
+void load_texture(t_game *g, t_image *img, char *s)
+{
+	int width;
+	int height;
+
+	height = 0;
+	width = 0;
+	if(!ft_strcmp(s, "NO"))
+		img->img_ptr = mlx_xpm_file_to_image(g->window->mlx, g->NO, &width, &height);
+	else if(!ft_strcmp(s, "SO"))
+		img->img_ptr = mlx_xpm_file_to_image(g->window->mlx, g->SO, &width, &height);
+	else if(!ft_strcmp(s, "EA"))
+		img->img_ptr = mlx_xpm_file_to_image(g->window->mlx, g->EA, &width, &height);
+	else if(!ft_strcmp(s, "WE"))
+		img->img_ptr = mlx_xpm_file_to_image(g->window->mlx, g->WE, &width, &height);
+	img->data = mlx_get_data_addr(img->img_ptr, &img->bits_per_pixel, &img->line_length, &img->endian);
+	if (img->img_ptr == NULL)
+    {
+        printf("Error loading texture %s\n", s);
+
+        return;
+    }
+	img->width = width;
+	img->height = height;
+}
+
 int check_map(char *argv, t_game *g)
 {
 	if(!check_mapname(argv))
@@ -224,5 +255,9 @@ int check_map(char *argv, t_game *g)
 	g->map = check_open_map(argv);
 	if(!check_map_path(g->map, g) || !check_map_maze(g->map, g))
 		return 0;
+	load_texture(g, g->EA_tex, "EA");
+	load_texture(g, g->NO_tex, "NO");
+	load_texture(g, g->SO_tex, "SO");
+	load_texture(g, g->WE_tex, "WE");
 	return 1;
 }

@@ -3,7 +3,7 @@
 int	press_key(int key,  t_game *game)
 {
 	if (key == ESC_KEY)
-		close_x();
+		ft_quit("Quitting the game\n", 0);
 	if (key == W_KEY)
 		game->controls->move_up = 1;
 	printf("%d\n", key);
@@ -55,4 +55,8 @@ void	ft_check_key(t_game *game)
 		ft_move_left(game);
 	if (game->controls->move_right)
 		ft_move_right(game);
+	if (game->controls->look_right)
+		ft_look_right(game);
+	if (game->controls->look_left)
+		ft_look_left(game);
 }

@@ -6,7 +6,7 @@ CFLAGS = -Werror -Wextra -Wall -I minilibx -L mlx -lmlx -framework OpenGL -frame
 
 RM = rm -rf
 
-SRCS = SRC/main.c SRC/utils.c SRC/map_checker.c  SRC/map_valid.c SRC/controls.c SRC/drawmap.c SRC/player_move.c
+SRCS = SRC/main.c SRC/utils.c SRC/map_checker.c  SRC/map_valid.c SRC/controls.c SRC/drawmap.c SRC/player_move.c SRC/raycast.c SRC/draw.c SRC/player_camera.c
 
 OBJS			= $(SRCS:.c=.o)
 

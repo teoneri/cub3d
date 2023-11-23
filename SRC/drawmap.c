@@ -6,7 +6,7 @@
 /*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/14 15:57:39 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/21 19:40:11 by lfai             ###   ########.fr       */
+/*   Updated: 2023/11/22 18:01:42 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void draw_square(t_game *g, int x, int y, int color)
     {
         for (j = 0; j < square_size; j++)
         {
-            mlx_pixel_put(g->mlx, g->win, x + j, y + i, color);
+            mlx_pixel_put(g->window->mlx, g->window->win, x + j, y + i, color);
         }
     }
 }
