@@ -2,18 +2,18 @@ NAME = cub3D
 
 SRC = SRC/main.c SRC/map_checker.c  SRC/map_valid.c SRC/drawmap.c SRC/raycast.c SRC/draw.c
 
-LINKS = minilibx-linux/libmlx_Linux.a -lXext -lX11 -lm
+CFLAGS = -Werror -Wextra -Wall -I minilibx -L mlx -lmlx -framework OpenGL -framework AppKit
 
-SRC_OBJ = $(SRC:.c=.o)
+RM = rm -rf
 
-LIB = Libft/libft.a
+SRCS = SRC/main.c SRC/utils.c SRC/map_checker.c  SRC/map_valid.c SRC/controls.c SRC/drawmap.c SRC/player_move.c
 
 FLAGS = -Wall -Wextra -Werror -fPIE -fPIC -g3 -O0
 all : $(NAME)
 
-$(NAME): $(SRC_OBJ) $(HEAD)
+$(NAME) : ${SRCS}
 	$(MAKE) -C Libft/
-	$(MAKE) -C minilibx-linux/
+	$(MAKE) -C mlx/
 	$(MAKE) clean -C Libft/
 	@gcc $(FLAGS) $(SRC_OBJ) $(LIB) $(LINKS) -o $(NAME)
 

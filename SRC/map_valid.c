@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_valid.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:30:29 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/10 14:38:22 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/22 11:20:10 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ int nosp_strlen(char *str)
 	len = ft_strlen(str) - 1;
 	j = 0;
 	i = 0;
-	
+
 	if(!str)
 		return 0;
 	while(str[i] == ' ' || str[i] == '\t' )
-		i++;	
+		i++;
 	j = i;
 	while(str[len] == ' ' || str[len] == '\t')
 	{
@@ -69,13 +69,13 @@ int nosp_strlen(char *str)
 		i++;
 	return i - j;
 }
-	
+
 
 int	valid_whitespace(char **map, int i, int j)
 {
 	if (map[i][j] != ' ' || map[i][j] != '\t')
 		return (1);
-	if(map[i][j - 1] && map[i - 1][j] && 
+	if(map[i][j - 1] && map[i - 1][j] &&
 		(map[i][j - 1] == '0' || map[i - 1][j] == '0'))
 		return 0;
 	if(j < (int)ft_strlen(map[i]) && i < (ft_matrixlen(map) - 1) &&
