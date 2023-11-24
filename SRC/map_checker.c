@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:17 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/23 18:29:27 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/24 14:23:53 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,11 @@ int check_map_path(char **map, t_game *g)
 		i++;
 	}
 	if(*flag != 6 || !ft_strchr(map[6], '1'))
+	{
+		free(flag);
 		return 0;
+	}	
+	free(flag);
 	return 1;
 }
 
@@ -294,6 +298,8 @@ int process_color(t_game *g)
 	}
 	g->F_color = (1 << 24 | floor[0] << 16 | floor[1] << 8 | floor[2]);
 	g->C_color = (1 << 24 | ceil[0] << 16 | ceil[1] << 8 | ceil[2]);
+	ft_freematrix(f_color);
+	ft_freematrix(c_color);
 	return 1;
 }
 

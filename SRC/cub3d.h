@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/23 18:28:31 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/24 13:13:46 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,7 @@ typedef struct s_game
 {
 	t_window *window;
 	t_player *player;
-	t_ray *ray;
 	t_controls *controls;
-	t_line *line;
 	t_image *img;
 	t_image *NO_tex;
 	t_image *SO_tex;
@@ -161,5 +159,6 @@ void calculate_side(t_game * g, t_ray *ray);
 void dda(t_game *g, t_ray *ray);
 void	measure_perp(t_game *g, t_ray *ray);
 int game_loop(t_game *g);
+void	ft_quit(t_game *g, char *str, int status);
 
 #endif

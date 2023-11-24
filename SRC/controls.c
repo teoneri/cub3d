@@ -3,7 +3,7 @@
 int	press_key(int key,  t_game *game)
 {
 	if (key == XK_Escape)
-		close_x();
+		ft_quit(game, "Quitting the game\n", 0);
 	if (key == XK_w)
 		ft_move_fwd(game);
 	printf("%d\n", key);

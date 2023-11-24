@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:20:20 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/23 18:27:58 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/24 13:56:34 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,45 @@ void init_game(t_game *g)
 {
 	ft_init_player(g);
 	ft_init_controls(g);
-	g->line = malloc(sizeof(t_line));
-	g->ray = malloc(sizeof(t_ray));
 	g->window = malloc(sizeof(t_window));
-	g->line = malloc(sizeof(t_line));
 	g->NO_tex = malloc(sizeof(t_image));
 	g->SO_tex = malloc(sizeof(t_image));
 	g->WE_tex = malloc(sizeof(t_image));
 	g->EA_tex = malloc(sizeof(t_image));
 	g->img = malloc(sizeof(t_image));
 }
-void	ft_quit(char *str, int status)
+void	ft_quit(t_game *g, char *str, int status)
 {
+	mlx_destroy_image(g->window->mlx, g->img->img_ptr);
+	mlx_destroy_image(g->window->mlx, g->NO_tex->img_ptr);
+	mlx_destroy_image(g->window->mlx, g->SO_tex->img_ptr);
+	mlx_destroy_image(g->window->mlx, g->EA_tex->img_ptr);
+	mlx_destroy_image(g->window->mlx, g->WE_tex->img_ptr);
+	free(g->img);
+	free(g->player);
+	free(g->controls);
+	free(g->EA);
+	free(g->WE);
+	free(g->SO);
+	free(g->NO);
+	free(g->F);
+	free(g->C);
+	free(g->EA_tex);
+	free(g->WE_tex);
+	free(g->SO_tex);
+	free(g->NO_tex);
+	ft_freematrix(g->map);
+	mlx_destroy_window(g->window->mlx, g->window->win);
+	mlx_destroy_display(g->window->mlx);
+	free(g->window->mlx);
+	free(g->window);
 	ft_putstr_fd(str, 0);
 	exit(status);
 }
 
-int	close_x()
+int	close_x(t_game *g)
 {
-	ft_quit("Quitting the game\n", 0);
+	ft_quit(g, "Quitting the game\n", 0);
 	return (0);
 }
 
