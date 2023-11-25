@@ -11,8 +11,8 @@ void	ft_init_player(t_game *g)
 	g->player->dirY = 0;
 	g->player->planeX = 0;
 	g->player->planeY = 0;
-	g->player->speed = 0.5;
-	g->player->sens = 1.0;
+	g->player->speed = 0.2;
+	g->player->sens = 0.2;
 }
 
 void	ft_init_controls(t_game *g)
