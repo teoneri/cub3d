@@ -1,11 +1,11 @@
 NO          /nfs/homes/mneri/Projects/cub3d/texture/wall_N.xpm
 SO          /nfs/homes/mneri/Projects/cub3d/texture/wall_S.xpm
 WE         /nfs/homes/mneri/Projects/cub3d/texture/wall_W.xpm
-EA        /nfs/homes/mneri/Projects/cub3d/texture/wall_E.xpm
+EA        /nfs/homes/mneri/Projects/cub3d/texture/wall_E.xpm2
 F     220,100,0 
 C 220,30,0 
         1111111111111111111111111
-       10000000001100000000000001  
+       100000000011000000000000001  
         1011000001110000000000001
         1001000000000000000000001
 111111111011000001110000000000001 

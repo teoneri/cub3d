@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:20:20 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/24 13:56:34 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/27 17:05:44 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,41 @@ void init_game(t_game *g)
 	g->SO_tex = malloc(sizeof(t_image));
 	g->WE_tex = malloc(sizeof(t_image));
 	g->EA_tex = malloc(sizeof(t_image));
+	g->NO = ft_calloc(1, 1);
+	g->SO = ft_calloc(1, 1);
+	g->WE = ft_calloc(1, 1);
+	g->EA = ft_calloc(1, 1);
+	g->C = ft_calloc(1, 1);
+	g->F = ft_calloc(1, 1);
 	g->img = malloc(sizeof(t_image));
 }
+
+void	free_init_game(t_game *g)
+{
+	free(g->player);
+	free(g->controls);
+	free(g->window);
+	free(g->NO_tex);
+	free(g->EA_tex);
+	free(g->WE_tex);
+	free(g->SO_tex);
+	free(g->img);
+	free(g->NO);
+	free(g->EA);
+	free(g->SO);
+	free(g->WE);
+	free(g->F);
+	free(g->C);
+}
+
+
+void 	free_map_pathMaze(t_game *g)
+{
+	if(g->map)
+		ft_freematrix(g->map);
+}
+
+
 void	ft_quit(t_game *g, char *str, int status)
 {
 	mlx_destroy_image(g->window->mlx, g->img->img_ptr);
@@ -65,12 +98,11 @@ int main(int argc, char **argv)
 	if(argc == 2)
 	{
 		init_game(&g);
-		g.window->mlx = mlx_init();
 		if(!check_map(argv[1], &g))
-		{
-			printf("Error\n");
+		{			
 			return 0;
 		}
+		g.window->mlx = mlx_init();
 		g.window->win = mlx_new_window(g.window->mlx, WIN_WIDTH, WIN_HEIGHT, "cub3D");
 		g.img->img_ptr = mlx_new_image(g.window->mlx, WIN_WIDTH, WIN_HEIGHT);
 		g.img->width = WIN_WIDTH;

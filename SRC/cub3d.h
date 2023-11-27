@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/24 13:13:46 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/27 16:01:10 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ typedef struct s_game
 	char *C;
 } t_game;
 
+void	free_init_game(t_game *g);
+void 	free_map_pathMaze(t_game *g);
 int	valid_zero(char **map, int i, int j);
 int check_map(char *argv, t_game *g);
 char **check_open_map(char *argv);

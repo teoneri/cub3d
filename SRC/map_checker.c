@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:17 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/24 14:23:53 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/27 17:05:40 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ char **check_open_map(char *argv)
 	int		readed;
 
 	readed = 1;
-	temp = ft_calloc(sizeof(char), 2);
-	stash = ft_calloc(sizeof(char), 1);
 	fd = open(argv, O_RDONLY);
 	if(fd == -1)
-		return 0;
+		return NULL;
+	temp = ft_calloc(sizeof(char), 2);
+	stash = ft_calloc(sizeof(char), 1);
 	while (readed != 0)
 	{
 		readed = read(fd, temp, 1);
@@ -53,12 +53,13 @@ char **check_open_map(char *argv)
 	return (map);
 }
 
-char *copy_path(char *map, int i)
+char *copy_path(char *map, int i, char *s)
 {
 	int len;
 	char *path;
 	int j;
 
+	free(s);
 	while(map[i] && (map[i] == ' '))
 		i++;
 	i--;
@@ -77,22 +78,22 @@ void add_path_var(t_game *g, char *type, int *flag, char *map)
 
 	i = 2;
 	if(!ft_strcmp(type, "NO "))
-		g->NO = copy_path(map, i);
+		g->NO = copy_path(map, i, g->NO);
 	else if(!ft_strcmp(type, "SO "))
-		g->SO = copy_path(map, i);
+		g->SO = copy_path(map, i, g->SO);
 	else if(!ft_strcmp(type, "WE "))
-		g->WE = copy_path(map, i);
+		g->WE = copy_path(map, i, g->WE);
 	else if(!ft_strcmp(type, "EA "))
-		g->EA = copy_path(map, i);
+		g->EA = copy_path(map, i, g->EA);
 	else if(!ft_strcmp(type, "F "))
 	{
 		i = 1;
-		g->F = copy_path(map, i);
+		g->F = copy_path(map, i, g->F);
 	}
 	else if(!ft_strcmp(type, "C "))
 	{
 		i = 1;
-		g->C = copy_path(map, i);
+		g->C = copy_path(map, i, g->C);
 	}
 	(*flag)++;
 }
@@ -234,7 +235,7 @@ int load_texture(t_game *g, t_image *img, char *s)
 		img->img_ptr = mlx_xpm_file_to_image(g->window->mlx, g->EA, &width, &height);
 	else if(!ft_strcmp(s, "WE"))
 		img->img_ptr = mlx_xpm_file_to_image(g->window->mlx, g->WE, &width, &height);
-	if (img->img_ptr == NULL)
+	if (!img->img_ptr)
         return 0;
 	img->data = mlx_get_data_addr(img->img_ptr, &img->bits_per_pixel, &img->line_length, &img->endian);
 	img->width = width;
@@ -303,18 +304,47 @@ int process_color(t_game *g)
 	return 1;
 }
 
+int loadTextures(t_game *g)
+{
+	if(!load_texture(g, g->EA_tex, "EA "))
+	{
+		return 0;
+	}
+	if(!load_texture(g, g->SO_tex, "SO "))
+	{
+		return 0;
+	}
+	if(!load_texture(g, g->NO_tex, "NO "))
+	{
+		return 0;
+	}
+	if(!load_texture(g, g->WE_tex, "WE "))
+	{
+		return 0;
+	}
+	return 1;
+}
 
 int check_map(char *argv, t_game *g)
 {
 	if(!check_mapname(argv))
+	{
+		free_init_game(g);
 		return 0;
+	}
 	g->map = check_open_map(argv);
-	if(!check_map_path(g->map, g) || !check_map_maze(g->map, g))
+	if(!g->map || !check_map_path(g->map, g) || !check_map_maze(g->map, g) 
+		|| !process_color(g))
+	{
+		free_init_game(g);
+		free_map_pathMaze(g);
 		return 0;
-	if(!process_color(g))
+	}
+	if(!loadTextures(g))
+	{
+		free_init_game(g);
+		free_map_pathMaze(g);
 		return 0;
-	if(!load_texture(g, g->EA_tex, "EA") || !load_texture(g, g->NO_tex, "NO") ||
-		!load_texture(g, g->SO_tex, "SO") || !load_texture(g, g->WE_tex, "WE"))
-		return 0;
+	}
 	return 1;
 }

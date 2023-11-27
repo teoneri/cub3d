@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:30:29 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/23 18:23:07 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/27 15:24:28 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,10 @@ int	valid_whitespace(char **map, int i, int j)
 {
 	if (map[i][j] != ' ')
 		return (1);
-	if(map[i][j - 1] && map[i - 1][j] &&
-		(map[i][j - 1] == '0' || map[i - 1][j] == '0'))
+if(j < 0 && i < 0 && (map[i][j - 1] == '0' || map[i - 1][j] == '0'))
 		return 0;
-	if(j < (int)ft_strlen(map[i]) && i < (ft_matrixlen(map) - 1) &&
-		 (map[i][j + 1] == '0' || map[i + 1][j] == '0'))
+if(j + 1 < (int)ft_strlen(map[i]) && i + 1 < ft_matrixlen(map) &&
+   (map[i][j + 1] == '0' || map[i + 1][j] == '0'))
 		return 0;
 	return (1);
 }
