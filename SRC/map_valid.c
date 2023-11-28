@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/10 14:30:29 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/27 15:24:28 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/28 18:29:11 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ int nosp_strlen(char *str)
 
 	if(!str)
 		return 0;
-	while(str[i] == ' ' || str[i] == '\t' )
+	while(str[i] == ' ')
 		i++;
 	j = i;
-	while(str[len] == ' ' || str[len] == '\t')
+	while(str[len] == ' ')
 	{
 		len--;
 		j++;
@@ -71,35 +71,37 @@ int nosp_strlen(char *str)
 }
 
 
-int	valid_whitespace(char **map, int i, int j)
+int valid_whitespace(char **map, int i, int j)
 {
-	if (map[i][j] != ' ')
-		return (1);
-if(j < 0 && i < 0 && (map[i][j - 1] == '0' || map[i - 1][j] == '0'))
-		return 0;
-if(j + 1 < (int)ft_strlen(map[i]) && i + 1 < ft_matrixlen(map) &&
-   (map[i][j + 1] == '0' || map[i + 1][j] == '0'))
-		return 0;
-	return (1);
-}
+    if (map[i][j] != ' ')
+       { return 1;}
+	if(j > (int)ft_strlen(map[i + 1]) - 1 && j > (int)ft_strlen(map[i - 1]) -1)
+		{return 1;}
+	if (j > 0 && i > 0 && (map[i][j - 1] == '0' || map[i - 1][j] == '0'))
+        {return 0;}
+    if (j + 1 < (int)ft_strlen(map[i]) && i + 1 < ft_matrixlen(map) &&
+        (map[i][j + 1] == '0' || map[i + 1][j] == '0'))
+        {return 0;}
 
+    return 1;
+}
 
 int	valid_zero(char **map, int i, int j)
 {
 	if (map[i][j] != '0')
 		return (1);
-	if(j > (int)(ft_strlen(map[i - 1]) - 1) && j > (int)(ft_strlen(map[i + 1] - 1)))
+	if(j > (int)(ft_strlen(map[i - 1]) - 1) || j > (int)(ft_strlen(map[i + 1])- 1))
 		return 0;
 	return (1);
 }
 
 int valid_top_bottom(char **map, int i, int j)
 {
-	while(map[i][j] && (map[i][j] == ' ' || map[i][j] == '\t'))
+	while(map[i][j] && (map[i][j] == ' '))
 		j++;
 	while(map[i][j])
 	{
-		if(map[i][j] != '1' && map[i][j] != ' ' && map[i][j] != '\t')
+		if(map[i][j] != '1' && map[i][j] != ' ')
 			return 0;
 		j++;
 	}

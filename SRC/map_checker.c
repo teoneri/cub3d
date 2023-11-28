@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:17 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/27 17:05:40 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/28 17:18:03 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,37 +185,27 @@ int check_map_maze(char **map, t_game *g)
 
 	i = 6;
 	j = 0;
-
 	if(!valid_top_bottom(map, i, j) || !valid_top_bottom(map, map_row(map) - 1, j))
 		return 0;
-	i++;
-	while(map[i])
+	while(map[++i])
 	{
 		if(!valid_edge(map, i, j))
 			return 0;
 		while(map[i][j])
 		{
 			if(!valid_whitespace(map, i, j) || !valid_zero(map, i, j))
-			{
 				return 0;
-			}
 			if(!valid_char(map, i , j, g))
-			{
 				return 0;
-			}
 			if(map[i + 1])
 			{
 				if((nosp_strlen(map[i]) > nosp_strlen(map[i - 1]) && (i) > nosp_strlen(map[i - 1])) ||
 					(nosp_strlen(map[i]) > nosp_strlen(map[i + 1]) && (i) > nosp_strlen(map[i + 1])))
-				{
-					printf("%s\n", map[i]);
 					return 0;
-				}
 			}
 			j++;
 		}
 		j = 0;
-		i++;
 	}
 	return 1;
 }
@@ -280,16 +270,28 @@ int process_color(t_game *g)
 	f_color[2] = ft_strtrim(f_color[2], " ");
 	c_color[2] = ft_strtrim(c_color[2], " ");
 	if(!control_num(f_color) || !control_num(c_color))
+	{
+		ft_freematrix(f_color);
+		ft_freematrix(c_color);
 		return 0;
+	}	
 	while(c_color[i])
 		i++;
 	if(i != 3)
+	{
+		ft_freematrix(f_color);
+		ft_freematrix(c_color);
 		return 0;
+	}	
 	i = 0;
 	while(f_color[i])
 		i++;
 	if(i != 3)
+	{
+		ft_freematrix(f_color);
+		ft_freematrix(c_color);
 		return 0;
+	}	
 	i = 0;
 	while(i < 3)
 	{
@@ -306,22 +308,18 @@ int process_color(t_game *g)
 
 int loadTextures(t_game *g)
 {
-	if(!load_texture(g, g->EA_tex, "EA "))
-	{
+	g->EA_tex->img_ptr = NULL;
+	g->SO_tex->img_ptr = NULL;
+	g->WE_tex->img_ptr = NULL;
+	g->NO_tex->img_ptr = NULL;
+	if(!load_texture(g, g->EA_tex, "EA"))
 		return 0;
-	}
-	if(!load_texture(g, g->SO_tex, "SO "))
-	{
+	if(!load_texture(g, g->SO_tex, "SO"))
 		return 0;
-	}
-	if(!load_texture(g, g->NO_tex, "NO "))
-	{
+	if(!load_texture(g, g->NO_tex, "NO"))
 		return 0;
-	}
-	if(!load_texture(g, g->WE_tex, "WE "))
-	{
+	if(!load_texture(g, g->WE_tex, "WE"))
 		return 0;
-	}
 	return 1;
 }
 
@@ -329,21 +327,25 @@ int check_map(char *argv, t_game *g)
 {
 	if(!check_mapname(argv))
 	{
-		free_init_game(g);
+		free_init_game(g, 1);
+		free(g->window);
 		return 0;
 	}
 	g->map = check_open_map(argv);
 	if(!g->map || !check_map_path(g->map, g) || !check_map_maze(g->map, g) 
 		|| !process_color(g))
 	{
-		free_init_game(g);
+		free_init_game(g, 1);
 		free_map_pathMaze(g);
+		free(g->window);
 		return 0;
 	}
+	g->window->mlx = mlx_init();
 	if(!loadTextures(g))
 	{
-		free_init_game(g);
+		free_init_game(g, 0);
 		free_map_pathMaze(g);
+		free_mlx(g);
 		return 0;
 	}
 	return 1;
