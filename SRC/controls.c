@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   controls.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/30 15:28:48 by mneri             #+#    #+#             */
+/*   Updated: 2023/11/30 15:29:26 by mneri            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
-int	press_key(int key,  t_game *game)
+int	press_key(int key, t_game *game)
 {
 	if (key == XK_Escape)
 		ft_quit(game, "Quitting the game\n", 0);
 	if (key == XK_w)
 		ft_move_fwd(game);
-	printf("%d\n", key);
 	if (key == XK_s)
 		ft_move_bwd(game);
 	if (key == XK_a)
@@ -17,11 +28,10 @@ int	press_key(int key,  t_game *game)
 		ft_look_right(game);
 	if (key == XK_Left)
 		ft_look_left(game);
-
 	return (0);
 }
 
-int	release_key(int key,  t_game *game)
+int	release_key(int key, t_game *game)
 {
 	if (key == XK_w)
 		game->controls->move_up = 0;

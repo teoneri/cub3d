@@ -1,13 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player_camera.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/30 16:17:18 by mneri             #+#    #+#             */
+/*   Updated: 2023/11/30 16:22:30 by mneri            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 //setta elementi per fov e camera su screen
 void	ft_set_fov(t_game *g, double dir_y, double cam_x, double cam_y)
 {
-	/*if (g->player_spawn)
-		ft_quit("error: multiple players spawned.\n", 0);*/
-	g->player->dirY = dir_y;
-	g->player->planeX = cam_x;
-	g->player->planeY = cam_y;
+	g->player->dir_y = dir_y;
+	g->player->plane_x = cam_x;
+	g->player->plane_y = cam_y;
 }
 
 /* change player vector direction using this matrix formula:
@@ -16,42 +26,38 @@ void	ft_set_fov(t_game *g, double dir_y, double cam_x, double cam_y)
    (a is the angle of rotation / sensitivity)*/
 void	ft_look_right(t_game *game)
 {
-	double prev_dirX;
-	double prev_planeX;
-	double sens;
+	double	prev_dir_x;
+	double	prev_plane_x;
+	double	sens;
 
-	prev_dirX = game->player->dirX;
-	prev_planeX = game->player->planeX;
+	prev_dir_x = game->player->dir_x;
+	prev_plane_x = game->player->plane_x;
 	sens = game->player->sens;
-	game->player->dirX =
-		game->player->dirX * cos(sens) -
-		game->player->dirY * sin(sens);
-	game->player->dirY = prev_dirX * sin(sens) +
-		game->player->dirY * cos(sens);
-	game->player->planeX =
-		game->player->planeX * cos(sens) -
-		game->player->planeY * sin(sens);
-	game->player->planeY = prev_planeX * sin(sens) +
-		game->player->planeY * cos(sens);
+	game->player->dir_x = game->player->dir_x
+		* cos(sens) - game->player->dir_y * sin(sens);
+	game->player->dir_y = prev_dir_x * sin(sens)
+		+ game->player->dir_y * cos(sens);
+	game->player->plane_x = game->player->plane_x
+		* cos(sens) - game->player->plane_y * sin(sens);
+	game->player->plane_y = prev_plane_x * sin(sens)
+		+ game->player->plane_y * cos(sens);
 }
 
 void	ft_look_left(t_game *game)
 {
-	double prev_dirX;
-	double prev_planeX;
-	double sens;
+	double	prev_dir_x;
+	double	prev_plane_x;
+	double	sens;
 
-	prev_dirX = game->player->dirX;
-	prev_planeX = game->player->planeX;
+	prev_dir_x = game->player->dir_x;
+	prev_plane_x = game->player->plane_x;
 	sens = game->player->sens;
-	game->player->dirX =
-		game->player->dirX * cos(-sens) -
-		game->player->dirY * sin(-sens);
-	game->player->dirY = prev_dirX * sin(-sens) +
-		game->player->dirY * cos(sens);
-	game->player->planeX =
-		game->player->planeX * cos(-sens) -
-		game->player->planeY * sin(-sens);
-	game->player->planeY = prev_planeX * sin(-sens) +
-		game->player->planeY * cos(-sens);
+	game->player->dir_x = game->player->dir_x
+		* cos(-sens) - game->player->dir_y * sin(-sens);
+	game->player->dir_y = prev_dir_x * sin(-sens)
+		+ game->player->dir_y * cos(sens);
+	game->player->plane_x = game->player->plane_x
+		* cos(-sens) - game->player->plane_y * sin(-sens);
+	game->player->plane_y = prev_plane_x * sin(-sens)
+		+ game->player->plane_y * cos(-sens);
 }

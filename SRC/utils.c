@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/30 16:29:30 by mneri             #+#    #+#             */
+/*   Updated: 2023/11/30 17:11:22 by mneri            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	ft_init_player(t_game *g)
@@ -6,14 +18,14 @@ void	ft_init_player(t_game *g)
 	if (!g->player)
 		close_x(g);
 	g->player->found = 0;
-	g->player->posX = 5;
-	g->player->posY = 5;
-	g->player->dirX = 0;
-	g->player->dirY = 0;
-	g->player->planeX = 0;
-	g->player->planeY = 0;
+	g->player->pos_x = 5;
+	g->player->pos_y = 5;
+	g->player->dir_x = 0;
+	g->player->dir_y = 0;
+	g->player->plane_x = 0;
+	g->player->plane_y = 0;
 	g->player->speed = 0.1;
-	g->player->sens= 0.1;
+	g->player->sens = 0.1;
 }
 
 void	ft_init_controls(t_game *g)
@@ -27,4 +39,65 @@ void	ft_init_controls(t_game *g)
 	g->controls->move_right = 0;
 	g->controls->move_up = 0;
 	g->controls->move_down = 0;
+}
+
+int	map_row(char **mx)
+{
+	int	i;
+
+	i = 6;
+	while (mx[i] != NULL)
+		i++;
+	return (i);
+}
+
+int	map_colomn(char **mx)
+{
+	int	i;
+	int	j;
+	int	max;
+
+	max = 0;
+	i = 6;
+	j = 0;
+	while (mx[i])
+	{
+		while (mx[i][j])
+		{
+			j++;
+		}
+		if (j > max)
+			max = j;
+		i++;
+	}
+	return (max);
+}
+
+void	init_player(t_game *g, int i, int j, char **map)
+{
+	g->player->pos_x = j;
+	g->player->pos_y = i;
+	g->player->cam_height = 1.0;
+	if (map[i][j] == 'N')
+	{
+		g->player->dir_x = 0;
+		g->player->dir_y = -1;
+	}
+	else if (map[i][j] == 'E')
+	{
+		g->player->dir_x = 1;
+		g->player->dir_y = 0;
+	}
+	else if (map[i][j] == 'W')
+	{
+		g->player->dir_x = -1;
+		g->player->dir_y = 0;
+		g->player->plane_y = -0.66;
+		g->player->plane_x = 0;
+	}
+	else if (map[i][j] == 'S')
+	{
+		g->player->dir_x = 0;
+		g->player->dir_y = 1;
+	}
 }
