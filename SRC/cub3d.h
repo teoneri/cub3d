@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/30 17:04:51 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/30 17:45:27 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ void	ft_look_right(t_game *game);
 void	ft_look_left(t_game *game);
 void	ft_init_controls(t_game *g);
 void	ft_init_player(t_game *g);
+void	ft_set_fov(t_game *g, double dir_y, double cam_x, double cam_y);
 void	render(t_game *g, t_ray *ray);
 void	paint_texture_line(t_game *g, double wall_x, t_line *line, t_ray *ray);
 void	draw_texture_image(t_game *g, t_image *tex, t_line *line, t_ray *ray);

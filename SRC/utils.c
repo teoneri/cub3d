@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
+/*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 16:29:30 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/30 17:11:22 by mneri            ###   ########.fr       */
+/*   Updated: 2023/11/30 17:44:09 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,24 +80,22 @@ void	init_player(t_game *g, int i, int j, char **map)
 	g->player->cam_height = 1.0;
 	if (map[i][j] == 'N')
 	{
-		g->player->dir_x = 0;
-		g->player->dir_y = -1;
+		g->player->dir_x = 0.00;
+		ft_set_fov(g, -1.00, 0.66, 0.00);
 	}
 	else if (map[i][j] == 'E')
 	{
-		g->player->dir_x = 1;
-		g->player->dir_y = 0;
+		g->player->dir_x = 1.00;
+		ft_set_fov(g, 0.00, 0.00, 0.66);
 	}
 	else if (map[i][j] == 'W')
 	{
 		g->player->dir_x = -1;
-		g->player->dir_y = 0;
-		g->player->plane_y = -0.66;
-		g->player->plane_x = 0;
+		ft_set_fov(g, 0.00, 0.00, -0.66);
 	}
 	else if (map[i][j] == 'S')
 	{
-		g->player->dir_x = 0;
-		g->player->dir_y = 1;
+		g->player->dir_x = 0.00;
+		ft_set_fov(g, 1.00, -0.66, 0.00);
 	}
 }
