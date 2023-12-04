@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/30 17:04:51 by mneri            ###   ########.fr       */
+/*   Updated: 2023/12/04 15:29:02 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,5 +170,6 @@ int		process_color(t_game *g);
 int		check_map_path(char **map, t_game *g);
 void	paint_line(t_game *g, t_line *line, int rgb);
 int		continue_valid(char **map, t_game *g, int i, int j);
+void	ft_set_fov(t_game *g, double dir_y, double cam_x, double cam_y);
 
 #endif
