@@ -6,7 +6,7 @@
 /*   By: mneri <mneri@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/28 15:40:06 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/30 15:55:52 by mneri            ###   ########.fr       */
+/*   Updated: 2023/12/04 15:31:00 by mneri            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,32 +69,3 @@ void	ft_quit(t_game *g, char *str, int status)
 	ft_putstr_fd(str, 0);
 	exit(status);
 }
-
-// void	ft_quit2(t_game *g, char *str, int status)
-// {
-// 	mlx_destroy_image(g->window->mlx, g->img->img_ptr);
-// 	mlx_destroy_image(g->window->mlx, g->NO_tex->img_ptr);
-// 	mlx_destroy_image(g->window->mlx, g->SO_tex->img_ptr);
-// 	mlx_destroy_image(g->window->mlx, g->EA_tex->img_ptr);
-// 	mlx_destroy_image(g->window->mlx, g->WE_tex->img_ptr);
-// 	free(g->img);
-// 	free(g->player);
-// 	free(g->controls);
-// 	free(g->EA);
-// 	free(g->WE);
-// 	free(g->SO);
-// 	free(g->NO);
-// 	free(g->F);
-// 	free(g->C);
-// 	free(g->EA_tex);
-// 	free(g->WE_tex);
-// 	free(g->SO_tex);
-// 	free(g->NO_tex);
-// 	ft_freematrix(g->map);
-// 	mlx_destroy_window(g->window->mlx, g->window->win);
-// 	mlx_destroy_display(g->window->mlx);
-// 	free(g->window->mlx);
-// 	free(g->window);
-// 	ft_putstr_fd(str, 0);
-// 	exit(status);
-// }

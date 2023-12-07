@@ -6,7 +6,7 @@
 /*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/11/30 17:45:27 by lfai             ###   ########.fr       */
+/*   Updated: 2023/12/07 16:27:21 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void	ft_move_fwd(t_game *game);
 void	ft_move_bwd(t_game *game);
 void	ft_move_left(t_game *game);
 void	ft_move_right(t_game *game);
-void	ft_look_right(t_game *game);
+void	ft_look_right(t_game *game);s
 void	ft_look_left(t_game *game);
 void	ft_init_controls(t_game *g);
 void	ft_init_player(t_game *g);
@@ -171,5 +171,6 @@ int		process_color(t_game *g);
 int		check_map_path(char **map, t_game *g);
 void	paint_line(t_game *g, t_line *line, int rgb);
 int		continue_valid(char **map, t_game *g, int i, int j);
+void	ft_set_fov(t_game *g, double dir_y, double cam_x, double cam_y);
 
 #endif
