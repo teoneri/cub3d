@@ -6,7 +6,7 @@
 /*   By: lfai <lfai@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 15:21:32 by mneri             #+#    #+#             */
-/*   Updated: 2023/12/07 16:27:21 by lfai             ###   ########.fr       */
+/*   Updated: 2023/12/07 16:29:21 by lfai             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void	ft_move_fwd(t_game *game);
 void	ft_move_bwd(t_game *game);
 void	ft_move_left(t_game *game);
 void	ft_move_right(t_game *game);
-void	ft_look_right(t_game *game);s
+void	ft_look_right(t_game *game);
 void	ft_look_left(t_game *game);
 void	ft_init_controls(t_game *g);
 void	ft_init_player(t_game *g);
